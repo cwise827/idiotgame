@@ -53,12 +53,23 @@ public class PlayerController : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
         }
+
+        //Is the leftWallCheck transform in contact with a wall?
+        onLeftWall = Physics2D.OverlapCircle(leftWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(leftWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(leftWallCheck3.position, wallCheckRadius, whatIsGround);
+        //Is the rightWallCheck transform in contact with a wall?
+        onRightWall = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck3.position, wallCheckRadius, whatIsGround);
+        
     }
     void FixedUpdate()
     {
+        //Is the groundCheck transform in contact with the ground?
         grounded = Physics2D.OverlapCircle(groundCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(groundCheck2.position, wallCheckRadius, whatIsGround);
-        onLeftWall = Physics2D.OverlapCircle(leftWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(leftWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(leftWallCheck3.position, wallCheckRadius, whatIsGround);
-        onRightWall = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck3.position, wallCheckRadius, whatIsGround);
+        Debug.Log(grounded);
+        
+    }
+
+    void OnCollisionEnter2d(Collision2D col){
+        Debug.Log("yessir");
     }
 
     public float JumpHeight { get => JumpHeight1; set => JumpHeight1 = value; }
