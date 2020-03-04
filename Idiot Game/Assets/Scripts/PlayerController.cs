@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     //sprites for facing both directions
     public Sprite playerLeft, playerRight;
+    MapManager mMan = new MapManager();
     void Start()
     {
         grounded = true;
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
         jumpHeight = 5;
         movingEnabled = true;
         wallCheckRadius = .01f;
+        //mMan.SaveMap();
+        //mMan.LoadGame();
     }
 
     // Update is called once per frame
@@ -77,7 +80,6 @@ public class PlayerController : MonoBehaviour
     {
         //Is the groundCheck transform in contact with the ground?
         grounded = Physics2D.OverlapCircle(groundCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(groundCheck2.position, wallCheckRadius, whatIsGround);
-        Debug.Log(onLeftWall);
     }
 
     //runs when collision between player box collider and another game object occurs

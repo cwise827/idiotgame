@@ -8,6 +8,7 @@ TagManager:
   - Right Wall
   - Floor
   - Ceiling
+  - Box
   layers:
   - Default
   - TransparentFX
