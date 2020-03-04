@@ -18,7 +18,9 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight, moveSpeed;
     //how far to check around player for wall
     private float wallCheckRadius;
+    //game objects with tagged layers
     public LayerMask whatIsGround;
+    //sprites for facing both directions
     public Sprite playerLeft, playerRight;
     void Start()
     {
@@ -37,22 +39,33 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpHeight);
             
         }
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && movingEnabled && !onLeftWall)
+        if (((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && movingEnabled && !onLeftWall) && (!Input.GetKey(KeyCode.D)) && !Input.GetKey(KeyCode.RightArrow))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            //change sprite to face left
             this.gameObject.GetComponent<SpriteRenderer>().sprite = playerLeft;
+            //adjusts box collider to fit player left orientation
+            this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(.18f, -.1849773f);
+            groundCheck.position = new Vector3(-.899f, groundCheck.position.y, groundCheck.position.z);
+            groundCheck2.position = new Vector3(1.275f, groundCheck2.position.y, groundCheck2.position.z);
         }
 
-        if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && movingEnabled && !onRightWall)
+        if (((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && movingEnabled && !onRightWall) && (!Input.GetKey(KeyCode.A)) && !Input.GetKey(KeyCode.LeftArrow))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            //change sprite to face right
             this.gameObject.GetComponent<SpriteRenderer>().sprite = playerRight;
+            //adjusts box collider to fit player right orientation
+            this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(-.1796908f, -.1849773f);
+            groundCheck.position = new Vector3(-1.277f, groundCheck.position.x);
+            groundCheck2.position = new Vector3(.9f, groundCheck2.position.y, groundCheck2.position.z);
         }
 
         if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) && movingEnabled)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
         }
+
 
         //Is the leftWallCheck transform in contact with a wall?
         onLeftWall = Physics2D.OverlapCircle(leftWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(leftWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(leftWallCheck3.position, wallCheckRadius, whatIsGround);
@@ -64,12 +77,15 @@ public class PlayerController : MonoBehaviour
     {
         //Is the groundCheck transform in contact with the ground?
         grounded = Physics2D.OverlapCircle(groundCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(groundCheck2.position, wallCheckRadius, whatIsGround);
+        Debug.Log(onLeftWall);
     }
 
+    //runs when collision between player box collider and another game object occurs
     void OnCollisionEnter2D(Collision2D col){
-        
+
     }
 
+    //getters and setters
     public float JumpHeight { get => JumpHeight1; set => JumpHeight1 = value; }
     public float JumpHeight1 { get => jumpHeight; set => jumpHeight = value; }
     public bool Grounded { get => Grounded1; set => Grounded1 = value; }
