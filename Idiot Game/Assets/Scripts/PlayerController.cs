@@ -64,12 +64,10 @@ public class PlayerController : MonoBehaviour
     {
         //Is the groundCheck transform in contact with the ground?
         grounded = Physics2D.OverlapCircle(groundCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(groundCheck2.position, wallCheckRadius, whatIsGround);
-        Debug.Log(grounded);
-        
     }
 
-    void OnCollisionEnter2d(Collision2D col){
-        Debug.Log("yessir");
+    void OnCollisionEnter2D(Collision2D col){
+        
     }
 
     public float JumpHeight { get => JumpHeight1; set => JumpHeight1 = value; }
