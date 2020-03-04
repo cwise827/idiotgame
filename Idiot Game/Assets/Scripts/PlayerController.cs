@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     //sprites for facing both directions
     public Sprite playerLeft, playerRight;
     MapManager mMan = new MapManager();
+    GameObject prefab, boxPre;
+    
     void Start()
     {
         grounded = true;
@@ -30,8 +32,6 @@ public class PlayerController : MonoBehaviour
         jumpHeight = 5;
         movingEnabled = true;
         wallCheckRadius = .01f;
-        //mMan.SaveMap();
-        //mMan.LoadGame();
     }
 
     // Update is called once per frame
@@ -75,6 +75,10 @@ public class PlayerController : MonoBehaviour
         //Is the rightWallCheck transform in contact with a wall?
         onRightWall = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck3.position, wallCheckRadius, whatIsGround);
         
+    }
+
+    void CreateInstance(Vector3 position){
+        Instantiate(this.gameObject, position, Quaternion.identity);
     }
     void FixedUpdate()
     {

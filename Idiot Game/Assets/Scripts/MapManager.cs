@@ -92,8 +92,8 @@ public class MapManager
                 float positionx = save.positions[i];
                 float positiony = save.positions[i+1];
                 float positionz = save.positions[i+2];
-                //UnityEngine.Object.Instantiate(prefab, new Vector3(positionx, positiony, positionz), Quaternion.identity);
-                Debug.Log("Game object " + s + " has positions x: " + positionx + " y: " + positiony + " z: " + positionz);
+                UnityEngine.Object.Instantiate(prefab, new Vector3(positionx, positiony, positionz), Quaternion.identity);
+                //Debug.Log("Game object " + s + " has positions x: " + positionx + " y: " + positiony + " z: " + positionz);
                 
                 
             }
