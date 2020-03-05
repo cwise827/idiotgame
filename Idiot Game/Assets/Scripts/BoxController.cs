@@ -16,7 +16,4 @@ public class BoxController : MonoBehaviour
         
     }
 
-    void CreateInstance(Vector3 position){
-        Instantiate(this.gameObject, position, Quaternion.identity);
-    }
 }

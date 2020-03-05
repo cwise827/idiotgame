@@ -55,20 +55,26 @@ public class MapManager
         }
     }
 
-    public void SaveMap()
+    public void SaveMap(string mapName)
     {
     
         MapProperties save = mapProperties();
  
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.dataPath + "/Maps/gamesave.igm");
-        bf.Serialize(file, save);
-        file.Close();
+        if(!File.Exists(Application.dataPath + "/Maps/" + mapName + ".igm")){
+            FileStream file = File.Create(Application.dataPath + "/Maps/" + mapName + ".igm");
+            bf.Serialize(file, save);
+            file.Close();
+            
+            Debug.Log("Game Saved");
+        }
+        else{
+            Debug.Log("Warning! Did not save! Map name already exists!");
+        }
         
-        Debug.Log("Game Saved");
     }
 
-    public void LoadGame()
+    public void LoadMap(string mapName)
     { 
   // 1
         GameObject prefab;
@@ -76,12 +82,12 @@ public class MapManager
         MapProperties mapP = new MapProperties();
         Dictionary<string, int> keys = mapP.prefabKeys;
         
-        if (File.Exists(Application.dataPath + "/Maps/gamesave.igm"))
+        if (File.Exists(Application.dataPath + "/Maps/" + mapName + ".igm"))
         {
             ClearGameObjects();
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.dataPath + "/Maps/gamesave.igm", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/Maps/" + mapName + ".igm", FileMode.Open);
             MapProperties save = (MapProperties)bf.Deserialize(file);
             file.Close();
 
@@ -99,12 +105,12 @@ public class MapManager
             }
 
             
-            Debug.Log("Game Loaded");
+            Debug.Log("Map " + mapName + " loaded!");
 
         }
         else
         {
-            Debug.Log("No game saved!");
+            Debug.Log("Map name does not exist in Assets/Maps. Make sure not to include .igm at the end of \"Map Name\"");
         }
     }
 }

@@ -5,17 +5,16 @@ using UnityEngine;
 public class MapLoadSave : MonoBehaviour
 {
     MapManager mMan = new MapManager();
-    bool loadedOnce = false;
+    public bool saveMap, loadMap;
+    public string mapName = "Default";
     // Start is called before the first frame update
     void Start()
     {
-        if(!loadedOnce){
-            //mMan.SaveMap();
-            mMan.LoadGame();
-            Debug.Log("started");
+        if(saveMap){
+            mMan.SaveMap(mapName);
         }
-        else{
-            loadedOnce = true;
+        if(loadMap){
+            mMan.LoadMap(mapName);
         }
     }
 

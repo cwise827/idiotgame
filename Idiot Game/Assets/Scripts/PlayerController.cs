@@ -22,14 +22,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     //sprites for facing both directions
     public Sprite playerLeft, playerRight;
-    MapManager mMan = new MapManager();
-    GameObject prefab, boxPre;
     
     void Start()
     {
         grounded = true;
-        moveSpeed = 3;
-        jumpHeight = 5;
+        moveSpeed = 5;
+        jumpHeight = 8;
         movingEnabled = true;
         wallCheckRadius = .01f;
     }
@@ -49,8 +47,8 @@ public class PlayerController : MonoBehaviour
             this.gameObject.GetComponent<SpriteRenderer>().sprite = playerLeft;
             //adjusts box collider to fit player left orientation
             this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(.18f, -.1849773f);
-            groundCheck.position = new Vector3(-.899f, groundCheck.position.y, groundCheck.position.z);
-            groundCheck2.position = new Vector3(1.275f, groundCheck2.position.y, groundCheck2.position.z);
+            groundCheck.localPosition = new Vector3(-.899f, groundCheck.localPosition.y, groundCheck.localPosition.z);
+            groundCheck2.localPosition = new Vector3(1.275f, groundCheck2.localPosition.y, groundCheck2.localPosition.z);
         }
 
         if (((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && movingEnabled && !onRightWall) && (!Input.GetKey(KeyCode.A)) && !Input.GetKey(KeyCode.LeftArrow))
@@ -60,8 +58,8 @@ public class PlayerController : MonoBehaviour
             this.gameObject.GetComponent<SpriteRenderer>().sprite = playerRight;
             //adjusts box collider to fit player right orientation
             this.gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(-.1796908f, -.1849773f);
-            groundCheck.position = new Vector3(-1.277f, groundCheck.position.x);
-            groundCheck2.position = new Vector3(.9f, groundCheck2.position.y, groundCheck2.position.z);
+            groundCheck.localPosition = new Vector3(-1.277f, groundCheck.localPosition.y, groundCheck.localPosition.z);
+            groundCheck2.localPosition = new Vector3(.9f, groundCheck2.localPosition.y, groundCheck2.localPosition.z);
         }
 
         if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) && movingEnabled)
@@ -75,10 +73,6 @@ public class PlayerController : MonoBehaviour
         //Is the rightWallCheck transform in contact with a wall?
         onRightWall = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck2.position, wallCheckRadius, whatIsGround) || Physics2D.OverlapCircle(rightWallCheck3.position, wallCheckRadius, whatIsGround);
         
-    }
-
-    void CreateInstance(Vector3 position){
-        Instantiate(this.gameObject, position, Quaternion.identity);
     }
     void FixedUpdate()
     {
